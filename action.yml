@@ -1,0 +1,17 @@
+# action.yml
+name: 'CI/CD Slack'
+description: 'Post CI/CD related messages using DotCMS bot'
+inputs:
+  github-user:
+    description: 'Github user aka actor triggering CI/CD at github action'
+    required: true
+  branch:
+    description: 'Current branch'
+    required: true
+    default: master
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.github-user }}
+    - ${{ inputs.branch }}
