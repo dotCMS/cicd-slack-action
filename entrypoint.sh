@@ -99,8 +99,14 @@ function resolveMessage {
       resultLabel="*FAILED*"
       emoji=":thunder_cloud_and_rain: "
     fi
+
+    if [[ -n "${DATABASE_TYPE}" ]]; then
+      databaseTypeLabel=" (${DATABASE_TYPE^^})"
+    else
+      databaseTypeLabel=
+    fi
   
-    message="${message}\n*${emoji}${TEST_TYPE}* tests has ${resultLabel}: <${BRANCH_TEST_RESULT_URL}|Details>"
+    message="${message}\n*${emoji}${TEST_TYPE}*${databaseTypeLabel} tests has ${resultLabel}: <${BRANCH_TEST_RESULT_URL}|Details>"
   done
 
   message="${overallEmoji}PR <https://github.com/dotCMS/${DOT_CICD_TARGET}/pull/${PULL_REQUEST}|${PULL_REQUEST}> status: *${overall}*\n${message}"
