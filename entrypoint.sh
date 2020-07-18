@@ -17,6 +17,7 @@ export GITHUB_TEST_RESULTS_REMOTE="https://${GITHUB_USER_TOKEN}@${GITHUB_TEST_RE
 githubUser=${1}
 branch=${2}
 hash=${GITHUB_SHA::8}
+runId=${GITHUB_RUN_ID}
 
 function resolveChannel {
   local gUser=${1}
@@ -109,7 +110,7 @@ function resolveMessage {
     message="${message}\n*${emoji}${TEST_TYPE}*${databaseTypeLabel} tests has ${resultLabel}: <${BRANCH_TEST_RESULT_URL}|Details>"
   done
 
-  message="${overallEmoji}PR <https://github.com/dotCMS/${DOT_CICD_TARGET}/pull/${PULL_REQUEST}|${PULL_REQUEST}> status: *${overall}*\n${message}"
+  message="${overallEmoji}PR <https://github.com/dotCMS/${DOT_CICD_TARGET}/pull/${PULL_REQUEST}|${PULL_REQUEST}> at run <https://github.com/dotCMS/${DOT_CICD_TARGET}/actions/runs/${runId}|${runId}> has status: *${overall}*\n${message}"
   echo -e "${message}" > ./message.txt
 }
 
