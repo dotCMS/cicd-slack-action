@@ -83,6 +83,11 @@ function resolveMessage {
   git branch
   git pull origin ${branch}
   
+  if [[ ! -d ./projects/core/${hash} ]]; then
+    echo "Directory ./projects/core/${hash} does not exist"
+    exit 1
+  fi
+
   cd projects/core/${hash}
   local overall=SUCCESS
   overallEmoji=":thumbsup_all: "
