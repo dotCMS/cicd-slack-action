@@ -70,7 +70,7 @@ function gitConfig {
 function resolveMessage {
   local gBranch=${1}
   
-  git clone ${GITHUB_TEST_RESULTS_REPO} ${TEST_RESULTS_PATH}
+  git clone -–depth 1 ${GITHUB_TEST_RESULTS_REPO} ${TEST_RESULTS_PATH}
   cd ${TEST_RESULTS}
   
   git fetch --all
@@ -114,8 +114,14 @@ function resolveMessage {
   
     message="${message}\n*${emoji}${TEST_TYPE}*${databaseTypeLabel} tests has ${resultLabel}: <${BRANCH_TEST_RESULT_URL}|Details>"
   done
+  
+  if [[ -z "${PULL_REQUEST}" ]]; then
+    prLabel="Merge to <https://github.com/dotCMS/${DOT_CICD_TARGET}/commit/${GITHUB_SHA}|${branch}>"
+  else
+    prLabel="PR <https://github.com/dotCMS/${DOT_CICD_TARGET}/pull/${PULL_REQUEST}|${PULL_REQUEST}>"
+  fi
 
-  message="${overallEmoji}PR <https://github.com/dotCMS/${DOT_CICD_TARGET}/pull/${PULL_REQUEST}|${PULL_REQUEST}> at run <https://github.com/dotCMS/${DOT_CICD_TARGET}/actions/runs/${runId}|${runId}> has status: *${overall}*\n${message}"
+  message="${overallEmoji}${prLabel} at run <https://github.com/dotCMS/${DOT_CICD_TARGET}/actions/runs/${runId}|${runId}> has status: *${overall}*\n${message}"
   echo -e "${message}" > ./message.txt
 }
 
