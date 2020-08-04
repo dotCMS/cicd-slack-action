@@ -70,7 +70,7 @@ function gitConfig {
 function resolveMessage {
   local gBranch=${1}
   
-  git clone -–depth 1 ${GITHUB_TEST_RESULTS_REPO} ${TEST_RESULTS_PATH}
+  git clone ${GITHUB_TEST_RESULTS_REPO} ${TEST_RESULTS_PATH}
   cd ${TEST_RESULTS}
   
   git fetch --all
